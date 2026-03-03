@@ -147,7 +147,7 @@ ul {
     font-family: var(--font-heading);
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--secondary-color);
+    color: var(--secondary);
 }
 
 .logo img {
@@ -220,7 +220,7 @@ ul {
     display: block;
     width: 25px;
     height: 3px;
-    background-color: var(--secondary-color);
+    background-color: var(--secondary);
     margin: 5px 0;
     transition: 0.3s;
 }
@@ -339,7 +339,7 @@ ul {
 .service-card h3 {
     font-family: var(--font-heading);
     margin-bottom: 0.8rem;
-    color: var(--secondary-color);
+    color: var(--secondary);
     font-size: 1.35rem;
 }
 
@@ -954,6 +954,8 @@ footer {
         padding: 2rem;
         transition: 0.3s ease;
         box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1001;
+        /* Ensure it's above the main navbar content */
     }
 
     .nav-links.active {
@@ -1121,7 +1123,7 @@ footer {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
-    color: var(--secondary-color);
+    color: var(--secondary);
 }
 
 .form-group input,
@@ -1236,7 +1238,7 @@ footer {
 }
 
 .modal-close:hover {
-    color: var(--secondary-color);
+    color: var(--secondary);
 }
 
 .modal-header {
@@ -1246,7 +1248,7 @@ footer {
 
 .modal-header h2 {
     font-family: var(--font-heading);
-    color: var(--secondary-color);
+    color: var(--secondary);
     margin-bottom: 0.5rem;
 }
 

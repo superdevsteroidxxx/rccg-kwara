@@ -1,20 +1,23 @@
 // Mobile Navigation Toggle
 const mobileBtn = document.getElementById('mobile-menu-btn');
 const navLinks = document.getElementById('nav-links');
+const navbar = document.getElementById('navbar');
 
-if (mobileBtn && navLinks) {
-    mobileBtn.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        mobileBtn.classList.toggle('active');
-    });
-
-    // Close menu when clicking a link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-            mobileBtn.classList.remove('active');
+function initNav() {
+    if (mobileBtn && navLinks) {
+        mobileBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileBtn.classList.toggle('active');
         });
-    });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileBtn.classList.remove('active');
+            });
+        });
+    }
 }
 
 // Navbar Scroll Effect
@@ -240,6 +243,13 @@ async function fetchUpcomingEvents() {
 
 function renderEvents(events) {
     const eventsContainer = document.getElementById('events-container');
+    if (!eventsContainer) return;
+
+    if (!events || events.length === 0) {
+        renderFallbackEvents();
+        return;
+    }
+
     eventsContainer.innerHTML = '';
 
     events.forEach(event => {
@@ -266,42 +276,19 @@ function renderEvents(events) {
 
 function renderFallbackEvents(message) {
     const eventsContainer = document.getElementById('events-container');
+    if (!eventsContainer) return;
 
-    // Curated fallback events to show when API is not configured
-    const featuredEvents = [
-        {
-            summary: "Sunday Celebration Service",
-            description: "Join us for a powerful time of worship and the word. Experience divine transformation in His presence.",
-            start: { dateTime: getNextDayOfWeek(new Date(), 0, "08:00") },
-            htmlLink: "#"
-        },
-        {
-            summary: "Digging Deep (Bible Study)",
-            description: "An intensive study of God's word every Tuesday. Grow deeper in your knowledge of Christ.",
-            start: { dateTime: getNextDayOfWeek(new Date(), 2, "17:00") },
-            htmlLink: "#"
-        },
-        {
-            summary: "Faith Clinic (Prayer Meeting)",
-            description: "A mid-week encounter for miracles and breakthroughs every Thursday. Come and pray your way to victory.",
-            start: { dateTime: getNextDayOfWeek(new Date(), 4, "17:00") },
-            htmlLink: "#"
-        }
-    ];
+    eventsContainer.innerHTML = `
+        <div class="no-events fade-in visible center-text" style="padding: 2rem; background: var(--bg-soft); border-radius: var(--radius-md); border: 1px dashed var(--glass-border);">
+            <i class="fas fa-calendar-alt" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem; display: block;"></i>
+            <h3 style="margin-bottom: 0.5rem; color: var(--secondary);">Stay Tuned!</h3>
+            <p style="color: var(--text-light);">We are currently updating our calendar. Check back soon for our next special program!</p>
+        </div>
+    `;
 
     if (message) {
-        console.warn('Calendar Fallback:', message);
-        // Optionally show a subtle notice that these are recurring events
-        const notice = document.createElement('p');
-        notice.className = 'center-text';
-        notice.style.fontSize = '0.8rem';
-        notice.style.opacity = '0.7';
-        notice.style.marginBottom = '2rem';
-        notice.textContent = '(Showing our regular weekly programs)';
-        eventsContainer.before(notice);
+        console.warn('Calendar Info:', message);
     }
-
-    renderEvents(featuredEvents);
 }
 
 // Helper to get next occurrence of a day (0=Sunday, 2=Tuesday, etc)
@@ -315,6 +302,7 @@ function getNextDayOfWeek(date, dayOfWeek, timeStr) {
 
 // Initialize components
 document.addEventListener('DOMContentLoaded', () => {
+    initNav();
     fetchUpcomingEvents();
     fetchBloggerPosts();
     fetchLatestSermons();
